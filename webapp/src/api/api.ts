@@ -1,11 +1,14 @@
-export async function addUser(username:string,email:string){
-    const apiEndPoint= 'http://localhost:5000/api'
+export async function addUser(username:string,email:string):Promise<boolean>{
+    const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
     let response = await fetch(apiEndPoint+'/users/add', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({'name':username, 'email':email})
       })
-    return await response.json()
+    if (response.status===200)
+      return true;
+    else
+      return false;
 }
 
 export async function getUsers(){

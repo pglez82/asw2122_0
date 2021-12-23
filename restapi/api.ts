@@ -12,7 +12,7 @@ let users: Array<User> = [];
 router.get(
     "/users/list",
     async (req: Request, res: Response): Promise<Response> => {
-        return res.send(users);
+        return res.status(200).send(users);
     }
 );
 
@@ -22,8 +22,8 @@ router.post(
     let name = req.body.name;
     let email = req.body.email;
     let user: User = {name:name,email:email}
-    users.push(user)
-    return res.send(user)
+    users.push(user);
+    return res.sendStatus(200);
   }
 );
 
