@@ -6,7 +6,7 @@ import Alert from '@mui/material/Alert';
 import type { AlertColor } from '@mui/material/Alert';
 import {addUser} from '../api/api';
 
-interface NotificationType {
+type NotificationType = {
   severity: AlertColor,
   message: string;
 }
@@ -23,19 +23,19 @@ function EmailForm(): JSX.Element {
   
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    let result:boolean = await addUser(name,email);
+    let result:boolean = await addUser({name,email});
     if (result){
       setNotificationStatus(true);
       setNotification({ 
         severity:'success',
-        message:'Has sido registrado correctamente en el sistema!'
+        message:'You have been registered in the system!'
       });
     }
     else{
       setNotificationStatus(true);
       setNotification({ 
         severity:'error',
-        message:'Has ocurrido un error en el registro.'
+        message:'There\'s been an error in the register proccess.'
       });
     }
   }
