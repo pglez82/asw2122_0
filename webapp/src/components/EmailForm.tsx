@@ -6,12 +6,16 @@ import Alert from '@mui/material/Alert';
 import type { AlertColor } from '@mui/material/Alert';
 import {addUser} from '../api/api';
 
+type EmailFormProps = {
+  OnUserListChange: () => void;
+}
+
 type NotificationType = {
   severity: AlertColor,
   message: string;
 }
 
-function EmailForm(): JSX.Element {
+function EmailForm(props: EmailFormProps): JSX.Element {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -30,6 +34,8 @@ function EmailForm(): JSX.Element {
         severity:'success',
         message:'You have been registered in the system!'
       });
+      //Notify the change to the parent component
+      props.OnUserListChange();
     }
     else{
       setNotificationStatus(true);

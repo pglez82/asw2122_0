@@ -15,20 +15,18 @@ function App(): JSX.Element {
   const refreshUserList = async () => {
     console.log("Refreshing users")
     setUsers(await getUsers());
-    console.log(users);
   }
 
   useEffect(()=>{
     refreshUserList();
-  },[users]);
+  },[]);
 
   return (
     <>
       <Container maxWidth="sm">
-        <Welcome message="ASW students"></Welcome>
-        
+        <Welcome message="ASW students"/>
         <Box component="div" sx={{ py: 2}}>This is a basic example of a React application using Typescript. You can add your email to the list filling the form below.</Box>
-        <EmailForm></EmailForm>
+        <EmailForm OnUserListChange={refreshUserList}/>        
         <UserList users={users}/>
       </Container>
     </>
