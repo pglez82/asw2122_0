@@ -1,0 +1,12 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "description": "Npm project just for the docs",
+  "main": "index.js",
+  "scripts": {
+    "build": "shx rm -rf build && asciidoctor -D build -a imagesdir=./images -r asciidoctor-diagram arc42-template.adoc && shx cp -R images build"
+  },
+  "dependencies": {
+    "shx": "^0.3.3"
+  }
+}
