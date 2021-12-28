@@ -17,7 +17,7 @@ function UserList(props: UserListProps): JSX.Element {
       <List>
       {props.users.map((user,i)=>{
         return (
-          <ListItem>
+          <ListItem key={user.email}>
             <ListItemIcon>
               <ContactPageIcon/>
             </ListItemIcon>
