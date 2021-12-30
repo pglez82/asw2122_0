@@ -1,4 +1,5 @@
-import express, { Request, Response, Router } from "express";
+import express, { Request, Response, Router } from 'express';
+import {check} from 'express-validator';
 
 const api:Router = express.Router()
 
@@ -7,6 +8,8 @@ interface User {
     email: string;
 }
 
+//This is not a restapi as it mantains state but it is here for
+//simplicity. A database should be used instead.
 let users: Array<User> = [];
 
 api.get(
@@ -17,7 +20,10 @@ api.get(
 );
 
 api.post(
-  "/users/add",
+  "/users/add",[
+    check('name').isLength({ min: 1 }).trim().escape(),
+    check('email').isEmail().normalizeEmail(),
+  ],
   async (req: Request, res: Response): Promise<Response> => {
     let name = req.body.name;
     let email = req.body.email;
