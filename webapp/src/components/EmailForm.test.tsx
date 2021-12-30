@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import EmailForm from "./EmailForm";
 
 test('check that everything is rendering propertly', async () => {
