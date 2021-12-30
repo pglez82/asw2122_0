@@ -1,6 +1,6 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, Router } from "express";
 
-const router = express.Router()
+const api:Router = express.Router()
 
 interface User {
     name: string;
@@ -9,14 +9,14 @@ interface User {
 
 let users: Array<User> = [];
 
-router.get(
+api.get(
     "/users/list",
     async (req: Request, res: Response): Promise<Response> => {
         return res.status(200).send(users);
     }
 );
 
-router.post(
+api.post(
   "/users/add",
   async (req: Request, res: Response): Promise<Response> => {
     let name = req.body.name;
@@ -27,4 +27,4 @@ router.post(
   }
 );
 
-export default router;
+export default api;
