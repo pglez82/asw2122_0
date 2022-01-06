@@ -48,9 +48,10 @@ function EmailForm(props: EmailFormProps): JSX.Element {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form name="register" onSubmit={handleSubmit}>
         <TextField
             required
+            name="username"
             label="Name" 
             variant="outlined"
             value={name}
@@ -59,6 +60,7 @@ function EmailForm(props: EmailFormProps): JSX.Element {
           />
         <TextField
           required
+          name="email"
           label="Email" 
           variant="outlined"
           value={email}
