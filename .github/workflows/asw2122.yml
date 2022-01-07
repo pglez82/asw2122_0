@@ -56,3 +56,4 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_PUSH_TOKEN }}
           registry: ghcr.io
+          workdir: webapp
