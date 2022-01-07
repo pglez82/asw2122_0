@@ -11,7 +11,7 @@
 </p>
 
 
-This project is a basic example of website using React with Typescript and an endpoint using NodeJS with express.
+This project is a basic example of website using **React** with **Typescript** and an endpoint using **NodeJS** with **express**.
 
 ## Quick start guide
 <mark>In case you already have node.js and npm, make sure you update them before attempting to build the images</mark>
