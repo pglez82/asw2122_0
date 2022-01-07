@@ -18,7 +18,6 @@ defineFeature(feature, test => {
       .goto("http://localhost:3000", {
         waitUntil: "networkidle0",
       })
-      // tslint:disable-next-line:no-empty
       .catch(() => {});
   });
 
@@ -45,5 +44,10 @@ defineFeature(feature, test => {
       await expect(page).toMatch('You have been registered in the system!')
     });
   })
+
+  afterAll(async ()=>{
+    browser.close()
+  })
+
 });
 
