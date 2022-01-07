@@ -1,46 +1,78 @@
-# Getting Started with Create React App
+## The webapp
+In this case we are using React with Typescript for the webapp. Lets create the app in the directory webapp with the following command (make sure you have npm installed in your system):
+```
+npx create-react-app webapp
+```
+At this point we can already run the app with:
+```
+cd webapp
+npm start
+```
+The app will launch and it will be listening in port 3000. At this point this app is a Hello World app in React.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Lets make some modifications to the app, we will create an app that asks the name and email to the user and send it to an api rest. The webapp will list all the register users in the site.
 
-## Available Scripts
+Basically the app should be able to get the name and email of a user, send it to the api, and then refresh the list of the users from the api. You can check the relevant code in the components [EmailForm.tsx](src/components/EmailForm.tsx) and [UserList.tsx](src/components/UserList.tsx). The [App.tsx](src/App.tsx) component acts as the coordinator for the other components.
 
-In the project directory, you can run:
+### Testing the webapp
 
-### `npm start`
+#### Unit tests
+Basically these tests make sure that each component work isolated. It is important to check that they render properly. These tests are done using jest and you can execute them with `npm run test`. A code coverage analysis is generated every time we run the tests. If properly configured, this can be exploited by tools like [CodeCov](https://about.codecov.io/) to create reports of code coverage.
+Some tests needs to mock some parts of the application. For instance, the `EmailForm.tsx` component uses the api for adding a user. In the unitary tests we should mock these calls to make more robusts tests. You can check the file [EmailForm.test.tsx](src/components/EmailForm.test.tsx) to learn how this is done.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Docker image for the web app
+The `Dockerfile` for the webapp is pretty simple. Just copy the app, install the dependencies, build the production version an then run a basic webserver to launch it. 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+In order to run the app, we need a server. `npm start` is not good for production so we are going to use [Express](https://expressjs.com/es/). Check [server.js](webapp/server.ts) in the webapp to understand the configuration. As we will run it in port 3000 (in localhost), we have to bind this port with the port in our local machine.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Launching everything at the same time (docker-compose)
+All the containers will be launched in order using docker compose. Check the file [docker-compose.yaml](docker-compose.yaml) to see the definition of the containers and their launch process. Here are the commands to launch the system and to turn it down:
+```
+docker-compose up
+```
+```
+docker-compose down
+```
+<mark>Note: if you change something in the code you should rebuild the images using the `--build` flag</mark>
 
-### `npm run build`
+## Continuous integration/Continuous Delivery
+In this step we are going to setup GitHub Actions in order to have CI in our system. The idea is that, every time we create a new release, build the system (restapi and webapp), run the tests, and if everything is ok, build the docker images and upload them to Github packages. Then we can deploy the application using these images.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The workflow for this is in [asw2122.yml](.github/workflow/asw2122.yml). In this file you can see that there are two jobs, one for the restapi, one for the webapp. Jobs are executed in pararel so this will speed up our build.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+So, the first to jobs in this file build the webapp and the restapi (in parallel). If everything goes well, check the e2e tests (later in this document) and if these acceptance tests pass ok, create the docker images and deploy them.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## E2E testing
+Integration tests is maybe the most difficult part to integrate in our system. We have to test the system as a whole. The idea here is to deploy the system and make the tests using [jest-puppeteer](https://github.com/smooth-code/jest-puppeteer) (browser automatization) and [jest-cucumber](https://www.npmjs.com/package/jest-cucumber) (user stories). We will also be using [expect-puppeteer](https://www.npmjs.com/package/expect-puppeteer) to make easier the test writing. All the structure needed is under the `webapp/e2e` directory. This tests can be run locally using `npm run test:e2e` and they will be run also in GitHub Actions, just after the unitary tests. 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Load testing (Gatling)
+This part will be carried out using [Gatling](https://gatling.io/). Gatling will simulate load in our system making petitions to the webapp.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+In order to use Gatling for doing the load tests in our application we need to [download](https://gatling.io/open-source/start-testing/) it. Basically, the program has two parts, a [recorder](https://gatling.io/docs/current/http/recorder) to capture the actions that we want to test and a program to run this actions and get the results. Gatling will take care of capture all the response times in our requests and presenting them in quite useful graphics for its posterior analysis.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Once we have downloaded Gatling we need to start the [recorder](https://gatling.io/docs/current/http/recorder). This works as a proxy that intercepts all the actions that we make in our browser. That means that we have to configure our browser to use a proxy. We have to follow this steps:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+1. Configure the recorder in **HTTP proxy mode**.
+2. Configure the **HTTPs mode** to Certificate Authority.
+3. Generate a **CA certificate** and key. For this, press the Generate CA button. You will have to choose a folder to generate the certificates. Two pem files will be generated.
+4. Configure Firefox to use this **CA certificate** (Preferences>Certificates, import the generated certificate).
+5. Configure Firefox to use a **proxy** (Preferences>Network configuration). The proxy will be localhost:8000.
+6. Configure Firefox so it uses this proxy even if the call is to a local address. In order to do this, we need to set the property `network.proxy.allow_hijacking_localhost` to `true` in `about:config`. 
 
-## Learn More
+Once we have the recorder configured, and the application running (in Heroku for instance), we can start recording our first test. We must specify a package and class name. This is just for test organization. Package will be a folder and Class name the name of the test. In my case I have used `GetUsersList` without package name. After pressing start the recorder will start capturing our actions in the browser. So here you should perform all the the actions that you want to record. In my case I just browsed to the Heroku deployed webapp. Once we stop recording the simulation will be stored under the `user-files/simulations` directory, written in [Scala](https://www.scala-lang.org/) language. I have copied the generated file under `webapp/loadtestexample` just in case you want to see how a test file in gatling looks like.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+We can modify our load test for instance to inject 20 users at the same time:
+```
+setUp(scn.inject(atOnceUsers(20))).protocols(httpProtocol)
+```
+changing it in the scala file.
+In order to execute the test we have to execute:
+```
+gatling.sh -s GetUsersExample
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+In the console, we will get an overview of the results and in the results directory we will have the full report in web format.
+
+It is important to note that we could also dockerize this load tests using this [image](https://hub.docker.com/r/denvazh/gatling). It is just a matter of telling the docker file where your gatling configuration and scala files are and the image will do the rest.
