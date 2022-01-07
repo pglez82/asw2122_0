@@ -14,7 +14,6 @@ function App(): JSX.Element {
   const [users,setUsers] = useState<User[]>([]);
 
   const refreshUserList = async () => {
-    console.log("Refreshing users")
     setUsers(await getUsers());
   }
 
