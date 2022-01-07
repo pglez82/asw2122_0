@@ -4,7 +4,11 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=pglez82_asw2122_0&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=pglez82_asw2122_0)
 [![codecov](https://codecov.io/gh/pglez82/asw2122_0/branch/master/graph/badge.svg?token=VN4XG9NTRO)](https://codecov.io/gh/pglez82/asw2122_0)
 
-![](https://blog.wildix.com/wp-content/uploads/2020/06/react-logo.jpg | height=100)
+<img src="https://blog.wildix.com/wp-content/uploads/2020/06/react-logo.jpg" height="100">
+<img src="https://miro.medium.com/max/1200/0*RbmfNyhuBb8G3LWh.png" height="100">
+<img src="https://miro.medium.com/max/365/1*Jr3NFSKTfQWRUyjblBSKeg.png" height="100">
+
+
 
 This project is a basic example of website using React with Typescript and an endpoint using NodeJS with express.
 
@@ -12,7 +16,7 @@ This project is a basic example of website using React with Typescript and an en
 <mark>In case you already have node.js and npm, make sure you update them before attempting to build the images</mark>
 
 If you want to execute the project you will need [git](https://git-scm.com/downloads), [Node.js and npm](https://www.npmjs.com/get-npm) and [Docker](https://docs.docker.com/get-docker/). Make sure the three of them are installed in your system. Download the project with `git clone https://github.com/pglez82/asw2122_0`. The fastest way to launch everything is with docker:
-```
+```bash
 docker-compose up --build
 ```
 This will create two docker images as they don't exist in your system (the webapp and the restapi) and launch a mongo container database. It will also launch Prometheus and Grafana containers to monitor the webservice. You should be able to access everything from here:
@@ -23,13 +27,13 @@ This will create two docker images as they don't exist in your system (the webap
  - [Grafana server http://localhost:9091](http://localhost:9091)
  
 If you want to run it without docker. Compile and run the web app:
-```
+```shell
 cd webapp
 npm install
 npm start
 ```
 Now the restapi:
-```
+```shell
 cd restapi
 npm install
 npm start
@@ -40,14 +44,14 @@ You should be able to access the application in [http://localhost:3000](http://l
 ### The documentation
 For the documentation we are going to use [AsciiDoc](https://asciidoc.org/) and [PlantUML](https://plantuml.com) and follows the [Arc42](https://github.com/arc42/arc42-template) template. If you want to be able to generate the doc locally you need to install Ruby and some dependencies to translate the asciidoc code into html:
 
-```
+```shell
 cd docs
 apt-get install ruby openjdk-8-jre
 gem install asciidoctor asciidoctor-diagram
 npm install
 ```
 After installing these tools we can generate the documentation.
-```
+```shell
 npm run build
 ```
 The documentation will be generated under the `docs/build` directory. If we want to deploy it to GitHub pages, so it is accesible via [https://pglez82.github.io/asw2122_0/](https://pglez82.github.io/asw2122_0/) we need to execute `npm run deploy`
