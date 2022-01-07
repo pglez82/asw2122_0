@@ -40,18 +40,8 @@ npm start
 ```
 You should be able to access the application in [http://localhost:3000](http://localhost:3000).
 
-## Documentation
-### The documentation
-For the documentation we are going to use [AsciiDoc](https://asciidoc.org/) and [PlantUML](https://plantuml.com) and follows the [Arc42](https://github.com/arc42/arc42-template) template. If you want to be able to generate the doc locally you need to install Ruby and some dependencies to translate the asciidoc code into html:
-
-```shell
-cd docs
-apt-get install ruby openjdk-8-jre
-gem install asciidoctor asciidoctor-diagram
-npm install
-```
-After installing these tools we can generate the documentation.
-```shell
-npm run build
-```
-The documentation will be generated under the `docs/build` directory. If we want to deploy it to GitHub pages, so it is accesible via [https://pglez82.github.io/asw2122_0/](https://pglez82.github.io/asw2122_0/) we need to execute `npm run deploy`
+## More information
+You can get more information about the respository in the other README files:
+- Documentation: https://github.com/pglez82/asw2122_0/tree/master/docs
+- Webapp: https://github.com/pglez82/asw2122_0/tree/master/webapp
+- Restapi: https://github.com/pglez82/asw2122_0/tree/master/restapi
