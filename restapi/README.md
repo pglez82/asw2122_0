@@ -24,7 +24,7 @@ After configuring the tests in the `package.json` we can run them using `npm run
 ### Docker image for the restapi
 In the Dockerfile of this folder we have the command for building an image for the restapi. We just install the dependencies and launch the API using `npm start`.
 
-## Monitoring (Prometheus and Grafana)
+### Monitoring (Prometheus and Grafana)
 In this step we are going use [Prometheus](https://prometheus.io/) and [Grafana](https://grafana.com/) to monitor the restapi. First step is modifying the restapi launch to capture profiling data. In nodejs this is very easy. After installing the required packages (express-prom-bundle and prom-client), we need to modify the `restapi/server.js` in order to capture the profiling data adding:
 ```javascript
 const metricsMiddleware = promBundle({includeMethod: true});
