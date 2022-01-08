@@ -8,7 +8,7 @@ Lets analyze the main packages used in this part (file package.json):
 - express-prom-bundle and prom-client: middleware to capture the petitions and send statistics to prometheus. This is useful for monitoring the webservice.
 - @types packages. Types for coding using typescript.
      
-The code is quite straight forward, the [server.ts](restapi/server.ts) file launchs the api. The [api.ts](restapi/api.ts) is actually the api, where you will see there two api entry points, one post for creating a new user, and one get to list all the users. 
+The code is quite straight forward, the [server.ts](server.ts) file launchs the api. The [api.ts](api.ts) is actually the api, where you will see there two api entry points, one post for creating a new user, and one get to list all the users. 
 
 For launching the API we can use `npm start`. This will launch the file `server.ts` using the package `ts-node-dev`. This package is useful for launching Typescript files with the additional feature of being able to reload the server if we change the code.
 
@@ -17,7 +17,7 @@ For testing we need to do simulate petitions against the API. In this case we ar
 
 <mark>Note: These dependencies are save only for dev mode, we do not need them for production.</mark>
 
-The idea is to use Jest (as in the webapp) as the main testing framework. For making the get or post petitions we are going to use supertest. The [api.test.ts](restapi/tests/api.test.ts), has the implementation of the tests. The `beforeAll` method is charge of starting the API.
+The idea is to use Jest (as in the webapp) as the main testing framework. For making the get or post petitions we are going to use supertest. The [api.test.ts](tests/api.test.ts), has the implementation of the tests. The `beforeAll` method is charge of starting the API.
 
 After configuring the tests in the `package.json` we can run them using `npm run test`.
 
