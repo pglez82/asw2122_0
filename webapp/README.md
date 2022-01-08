@@ -1,10 +1,10 @@
 ## The webapp
 In this case we are using React with Typescript for the webapp. Lets create the app in the directory webapp with the following command (make sure you have npm installed in your system):
-```
-npx create-react-app webapp
+```console
+npx create-react-app my-app --template typescript
 ```
 At this point we can already run the app with:
-```
+```console
 cd webapp
 npm start
 ```
@@ -49,7 +49,13 @@ Integration tests is maybe the most difficult part to integrate in our system. W
 
 In this project the E2E testing user stories are defined using Cucumber. Cucumber uses a language called Gherkin to define the user stories. You can find the example in the `features` directory. Then, the actual tests are in the folder `steps`. We are going to configure jest to execute only the tests of this directory (check the `jest.config.ts` file). 
 
-The E2E tests have two extra difficulties. The first one, we need a browser to perform the tests as if the user was using the application. For this matter, we use `jest-peppeteer` that will launch a Chromium instance for running the tests. The browser is started in the `beforeAll` function. Note that the browser is launched in a headless mode. This is neccesary for the tests to run in the CI environment. If you want to debug the tests you can always turn this feature off. The second problem is that we need to run the restapi and the webapp at the same time to be able to run the tests. For achieving this, we are going to use the package `start-server-and-test`. This package, allows us to launch multiple servers and then run the tests. No need for any configuration. We can configure it straight in the 
+The E2E tests have two extra difficulties. The first one, we need a browser to perform the tests as if the user was using the application. For this matter, we use `jest-peppeteer` that will launch a Chromium instance for running the tests. The browser is started in the `beforeAll` function. Note that the browser is launched in a headless mode. This is neccesary for the tests to run in the CI environment. If you want to debug the tests you can always turn this feature off. The second problem is that we need to run the restapi and the webapp at the same time to be able to run the tests. For achieving this, we are going to use the package `start-server-and-test`. This package, allows us to launch multiple servers and then run the tests. No need for any configuration. We can configure it straight in the `package.json` file:
+
+```json
+"test:e2e": "start-server-and-test 'npm --prefix ../restapi start' http://localhost:5000/api/users/list prod 3000 'cd e2e && jest'"
+```
+
+The package accepts pairs of parameters (launch a server and an URL to check if it is running. It also accepts npm commands (for instance prod, for the webapp, that will run `npm run prod`). The last parameter of the task will be launching jest to run the E2E tests.
 
 ### Load testing (Gatling)
 This part will be carried out using [Gatling](https://gatling.io/). Gatling will simulate load in our system making petitions to the webapp.
