@@ -78,17 +78,18 @@ Una vez descargado Gatling necesitamos inicializar la [grabadora](https://gatlin
 5. Configurar FireFox para utilizar un **proxy** (Preferences>Network configuration). El proxy estará en localhost:8000.
 6. Configurar Firefox para que utilice el proxy incluso si la llamada se produce desde una dirección local. Para esto necesitamos configurar la propiedad `network.proxy.allow_hijacking_localhost` a `true` en `about:config`. 
 
-Una vez tengamos la grabadora configurada y la apliación corriendo (en Heroku por ejemplo), podemos comenzar nuestro primer test. Necesitamos especificar un paquete y un nombre de clase para organizar los tests. El paquete será un directorio y el nombre de clase el nombre del test. En mi caso he utilizado `GetUserList`sin nombre de paquete. Despues de presionar "inicio" la grabadora comenzará a capturar las acciones que hagamos en el navegador. En este momento debes llevar a cabo todas las acciones que quieras grabar. En mi caso solo he navegado a la webapp deplegada en Heroku. Una vez dejemos de grabar, la simulación se almacenará en el directorio `user-files/simulations`. Escrito en lenguaje [Scala](https://www.scala-lang.org/). Si quieres ver el resultado de un test hecho con gatling puedes verlo en `webapp/loadtestexample`
+Una vez tengamos la grabadora configurada y la apliación corriendo (en Heroku por ejemplo), podemos comenzar nuestro primer test. Necesitamos especificar un paquete y un nombre de clase para organizar los tests. El paquete será un directorio y el nombre de clase el nombre del test. En mi caso he utilizado `GetUserList`sin nombre de paquete. Despues de presionar "inicio" la grabadora comenzará a capturar las acciones que hagamos en el navegador. En este momento debes llevar a cabo todas las acciones que quieras grabar. En este caso he navegado hasta la página principal de la webapp y he añadido un usuario. Una vez dejemos de grabar, la simulación se almacenará en el directorio `user-files/simulations`. Escrito en lenguaje [Scala](https://www.scala-lang.org/). Si quieres ver el resultado de un test hecho con gatling puedes verlo en `webapp/loadtestexample`. Ten en cuenta que en esta simulación hay una petición post a la restapi. Los datos que se envián en una petitición post, son almacenados por gattling en el directorio `user-files/resources`. 
 
 
 Podemos modificar nuestro test de carga ,por ejemplo, inyectando 20 usuarios al mismo tiempo:
 ```
-setUp(scn.inject(atOnceUsers(20))).protocols(httpProtocol)
+setUp(scn.inject(constantUsersPerSec(3).during(15))).protocols(httpProtocol)
 ```
-cambiarlo en el achivo scala.
+cambiarlo en el achivo scala. Revisa [esta página](https://gatling.io/docs/gatling/reference/current/core/injection/) para tener más información sobre como inyectar carga en nuestros tests de carga.
+
 Para correr los tests necesitmos ejecutar:
 ```
-gatling.sh -s GetUsersExample
+gatling.sh -s GetUserList
 ```
 Se mostrará una vista general de los resultados en la consola, además podremos ver un informe completo en formato wen en el directorio de los resultados.
 
