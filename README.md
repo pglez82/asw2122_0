@@ -27,18 +27,21 @@ This will create two docker images as they don't exist in your system (the webap
  - [Prometheus server - http://localhost:9090](http://localhost:9090)
  - [Grafana server http://localhost:9091](http://localhost:9091)
  
-If you want to run it without docker. Compile and run the web app:
-```shell
-cd webapp
-npm install
-npm start
-```
-Now the restapi:
+If you want to run it without docker. Compile and run the restapi:
 ```shell
 cd restapi
 npm install
 npm start
 ```
+
+Now the webapp:
+
+```shell
+cd webapp
+npm install
+npm start
+```
+
 You should be able to access the application in [http://localhost:3000](http://localhost:3000).
 
 ## More information
