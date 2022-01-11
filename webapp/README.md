@@ -76,16 +76,17 @@ Once we have downloaded Gatling we need to start the [recorder](https://gatling.
 5. Configure Firefox to use a **proxy** (Preferences>Network configuration). The proxy will be localhost:8000.
 6. Configure Firefox so it uses this proxy even if the call is to a local address. In order to do this, we need to set the property `network.proxy.allow_hijacking_localhost` to `true` in `about:config`. 
 
-Once we have the recorder configured, and the application running (in Heroku for instance), we can start recording our first test. We must specify a package and class name. This is just for test organization. Package will be a folder and Class name the name of the test. In my case I have used `GetUsersList` without package name. After pressing start the recorder will start capturing our actions in the browser. So here you should perform all the the actions that you want to record. In my case I just browsed to the Heroku deployed webapp. Once we stop recording the simulation will be stored under the `user-files/simulations` directory, written in [Scala](https://www.scala-lang.org/) language. I have copied the generated file under `webapp/loadtestexample` just in case you want to see how a test file in gatling looks like.
+Once we have the recorder configured, and the application running (in Heroku for instance), we can start recording our first test. We must specify a package and class name. This is just for test organization. Package will be a folder and Class name the name of the test. In my case I have used `GetUsersList` without package name. After pressing start the recorder will start capturing our actions in the browser. So here you should perform all the the actions that you want to record. In my case, I opened the main website and added one user. Once we stop recording the simulation will be stored under the `user-files/simulations` directory, written in [Scala](https://www.scala-lang.org/) language. I have copied the generated file under `webapp/loadtestexample` just in case you want to see how a test file in gatling looks like. Note that this simulation included a post petition to the restapi. Post data is stored under a different directory in the gattling installation directory (`user-files/resources`). 
 
 We can modify our load test for instance to inject 20 users at the same time:
+```scala
+setUp(scn.inject(constantUsersPerSec(3).during(15))).protocols(httpProtocol)
 ```
-setUp(scn.inject(atOnceUsers(20))).protocols(httpProtocol)
-```
-changing it in the scala file.
+changing it in the scala file. Check [here](https://gatling.io/docs/gatling/reference/current/core/injection/) to see more options about generating load.
 In order to execute the test we have to execute:
-```
-gatling.sh -s GetUsersExample
+
+```bash
+gatling.sh -s GetUsersList
 ```
 
 In the console, we will get an overview of the results and in the results directory we will have the full report in web format.
