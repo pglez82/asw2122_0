@@ -29,18 +29,20 @@ Este comando creará dos imagenes de docker si no existen en tu equipo (la webap
  - [Servidor Prometheus - http://localhost:9090](http://localhost:9090)
  - [Servidor Grafana http://localhost:9091](http://localhost:9091)
  
-Si quieres ejecutar el proyecto sin Docker primero complila y ejecuta la aplicación web:
-```shell
-cd webapp
-npm install
-npm start
-```
-a continuación la restapi:
+Si quieres ejecutar el proyecto sin Docker primero complila y ejecuta la restapi:
+
 ```shell
 cd restapi
 npm install
 npm start
 ```
+a continuación la webapp:
+```shell
+cd webapp
+npm install
+npm start
+```
+
 Deberias ser capaz de acceder a la aplicación en [http://localhost:3000](http://localhost:3000).
 
 ## Mas información
