@@ -1,10 +1,10 @@
 ## The webapp
 In this case we are using React with Typescript for the webapp. Lets create the app in the directory webapp with the following command (make sure you have npm installed in your system):
-```
-npx create-react-app webapp
+```console
+npx create-react-app my-app --template typescript
 ```
 At this point we can already run the app with:
-```
+```console
 cd webapp
 npm start
 ```
@@ -19,6 +19,11 @@ Basically the app should be able to get the name and email of a user, send it to
 #### Unit tests
 Basically these tests make sure that each component work isolated. It is important to check that they render properly. These tests are done using jest and you can execute them with `npm run test`. A code coverage analysis is generated every time we run the tests. If properly configured, this can be exploited by tools like [CodeCov](https://about.codecov.io/) to create reports of code coverage.
 Some tests needs to mock some parts of the application. For instance, the `EmailForm.tsx` component uses the api for adding a user. In the unitary tests we should mock these calls to make more robusts tests. You can check the file [EmailForm.test.tsx](src/components/EmailForm.test.tsx) to learn how this is done.
+For instance:
+```javascript
+jest.spyOn(api,'addUser').mockImplementation((user:User):Promise<boolean> => Promise.resolve(false))
+```
+will mock the implementation of the addUser function. Instead of calling the API, we just return false simulating that the webservice has failed to add a new user.
 
 ### Docker image for the web app
 The `Dockerfile` for the webapp is pretty simple. Just copy the app, install the dependencies, build the production version an then run a basic webserver to launch it. 
@@ -26,7 +31,7 @@ The `Dockerfile` for the webapp is pretty simple. Just copy the app, install the
 In order to run the app, we need a server. `npm start` is not good for production so we are going to use [Express](https://expressjs.com/es/). Check [server.js](webapp/server.ts) in the webapp to understand the configuration. As we will run it in port 3000 (in localhost), we have to bind this port with the port in our local machine.
 
 
-## Launching everything at the same time (docker-compose)
+### Launching everything at the same time (docker-compose)
 All the containers will be launched in order using docker compose. Check the file [docker-compose.yaml](docker-compose.yaml) to see the definition of the containers and their launch process. Here are the commands to launch the system and to turn it down:
 ```
 docker-compose up
@@ -36,7 +41,7 @@ docker-compose down
 ```
 <mark>Note: if you change something in the code you should rebuild the images using the `--build` flag</mark>
 
-## Continuous integration/Continuous Delivery
+### Continuous integration/Continuous Delivery
 In this step we are going to setup GitHub Actions in order to have CI in our system. The idea is that, every time we create a new release, build the system (restapi and webapp), run the tests, and if everything is ok, build the docker images and upload them to Github packages. Then we can deploy the application using these images.
 
 The workflow for this is in [asw2122.yml](.github/workflow/asw2122.yml). In this file you can see that there are two jobs, one for the restapi, one for the webapp. Jobs are executed in pararel so this will speed up our build.
@@ -44,10 +49,20 @@ The workflow for this is in [asw2122.yml](.github/workflow/asw2122.yml). In this
 So, the first to jobs in this file build the webapp and the restapi (in parallel). If everything goes well, check the e2e tests (later in this document) and if these acceptance tests pass ok, create the docker images and deploy them.
 
 
-## E2E testing
+### E2E testing
 Integration tests is maybe the most difficult part to integrate in our system. We have to test the system as a whole. The idea here is to deploy the system and make the tests using [jest-puppeteer](https://github.com/smooth-code/jest-puppeteer) (browser automatization) and [jest-cucumber](https://www.npmjs.com/package/jest-cucumber) (user stories). We will also be using [expect-puppeteer](https://www.npmjs.com/package/expect-puppeteer) to make easier the test writing. All the structure needed is under the `webapp/e2e` directory. This tests can be run locally using `npm run test:e2e` and they will be run also in GitHub Actions, just after the unitary tests. 
 
-## Load testing (Gatling)
+In this project the E2E testing user stories are defined using Cucumber. Cucumber uses a language called Gherkin to define the user stories. You can find the example in the `features` directory. Then, the actual tests are in the folder `steps`. We are going to configure jest to execute only the tests of this directory (check the `jest.config.ts` file). 
+
+The E2E tests have two extra difficulties. The first one, we need a browser to perform the tests as if the user was using the application. For this matter, we use `jest-peppeteer` that will launch a Chromium instance for running the tests. The browser is started in the `beforeAll` function. Note that the browser is launched in a headless mode. This is neccesary for the tests to run in the CI environment. If you want to debug the tests you can always turn this feature off. The second problem is that we need to run the restapi and the webapp at the same time to be able to run the tests. For achieving this, we are going to use the package `start-server-and-test`. This package, allows us to launch multiple servers and then run the tests. No need for any configuration. We can configure it straight in the `package.json` file:
+
+```json
+"test:e2e": "start-server-and-test 'npm --prefix ../restapi start' http://localhost:5000/api/users/list prod 3000 'cd e2e && jest'"
+```
+
+The package accepts pairs of parameters (launch a server and an URL to check if it is running. It also accepts npm commands (for instance prod, for the webapp, that will run `npm run prod`). The last parameter of the task will be launching jest to run the E2E tests.
+
+### Load testing (Gatling)
 This part will be carried out using [Gatling](https://gatling.io/). Gatling will simulate load in our system making petitions to the webapp.
 
 In order to use Gatling for doing the load tests in our application we need to [download](https://gatling.io/open-source/start-testing/) it. Basically, the program has two parts, a [recorder](https://gatling.io/docs/current/http/recorder) to capture the actions that we want to test and a program to run this actions and get the results. Gatling will take care of capture all the response times in our requests and presenting them in quite useful graphics for its posterior analysis.
