@@ -3,12 +3,24 @@ In this project the documentation is compiled locally and deployed to GitHub pag
 The deployment url is: [https://pglez82.github.io/asw2122_0/](https://pglez82.github.io/asw2122_0/).
 
 ### Documentation build
-For the documentation we are going to use [AsciiDoc](https://asciidoc.org/) and [PlantUML](https://plantuml.com) and follows the [Arc42](https://github.com/arc42/arc42-template) template. If you want to be able to generate the doc locally you need to install Ruby and some dependencies to translate the asciidoc code into html:
+For the documentation we are going to use [AsciiDoc](https://asciidoc.org/) and [PlantUML](https://plantuml.com) and follows the [Arc42](https://github.com/arc42/arc42-template) template. If you want to be able to generate the doc locally you need to install Ruby, Java and some dependencies to translate the asciidoc code into html. If you are in Linux you can install Ruby and Java simply by executing:
+
+```shell
+apt-get install ruby openjdk-8-jre
+```
+
+On Windows you can use [these instructions](https://www.ruby-lang.org/en/documentation/installation).
+
+Once Ruby is working you can install some gems with `asciidoctor` and `asciidoctor-diagram`.
+
+```shell
+gem install asciidoctor asciidoctor-diagram
+```
+
+Now it is turn to install some dependencies in the `package.json` file inside the `docs` directory:
 
 ```shell
 cd docs
-apt-get install ruby openjdk-8-jre
-gem install asciidoctor asciidoctor-diagram
 npm install
 ```
 After installing these tools we can generate the documentation.
