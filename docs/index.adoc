@@ -2,6 +2,8 @@
 // including all help texts
 //
 // ====================================
+:toc: left
+:toc-title: Table of Contents
 
 = image:arc42-logo.png[arc42] Template
 // toc-title definition MUST follow document title without blank line!
