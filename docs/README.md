@@ -9,7 +9,7 @@ For the documentation we are going to use [AsciiDoc](https://asciidoc.org/) and 
 apt-get install ruby openjdk-8-jre
 ```
 
-On Windows you can use [these instructions](https://www.ruby-lang.org/en/documentation/installation).
+On Windows you can use [these instructions](https://www.ruby-lang.org/en/documentation/installation). Probably you will have Java already installed in your system, if not, you can download it [here](https://www.oracle.com/es/java/technologies/javase/javase8-archive-downloads.html)
 
 Once Ruby is working you can install some gems with `asciidoctor` and `asciidoctor-diagram`.
 
