@@ -10,42 +10,43 @@
 <img src="https://miro.medium.com/max/365/1*Jr3NFSKTfQWRUyjblBSKeg.png" height="100">
 </p>
 
+Este proyecto es un ejemplo basico de un sitio web utilizando **React** con **Typescript** y un endpoint usando **NodeJS** con **express**
 
-This project is a basic example of website using **React** with **Typescript** and an endpoint using **NodeJS** with **express**.
+## Guia de inicio rápido
 
-## Quick start guide
-<mark>In case you already have node.js and npm, make sure you update them before attempting to build the images</mark>
+<mark>Si tienes instalados node.js y npm, asegurate de actualizarlos antes de intentar construir las imagenes</mark>
 
-If you want to execute the project you will need [git](https://git-scm.com/downloads), [Node.js and npm](https://www.npmjs.com/get-npm) and [Docker](https://docs.docker.com/get-docker/). Make sure the three of them are installed in your system. Download the project with `git clone https://github.com/pglez82/asw2122_0`. The fastest way to launch everything is with docker:
+Si quieres ejecutar el proyecto necesitarás [git](https://git-scm.com/downloads), [Node.js and npm](https://www.npmjs.com/get-npm) y [Docker](https://docs.docker.com/get-docker/). Asegurate de tenerlos instalados en tu equipo. Descarga el proyecto con `git clone https://github.com/pglez82/asw2122_0`. La manera más rápìda de ejecutar todo es con Docker.
+
 ```bash
 docker-compose up --build
 ```
-This will create two docker images as they don't exist in your system (the webapp and the restapi) and launch a mongo container database. It will also launch Prometheus and Grafana containers to monitor the webservice. You should be able to access everything from here:
+Este comando creará dos imagenes de docker si no existen en tu equipo (la webapp y la restapi) y lanzará un contenedor de mongoDB. Además lanzará contenedores de Prometheus y Grafana para monitorizar el servicio web. Deberias ser capaz de acceder a todo desde aqui:
+
  - [Webapp - http://localhost:3000](http://localhost:3000)
- - [RestApi example call - http://localhost:5000/api/users/list](http://localhost:5000/api/users/list)
- - [RestApi raw metrics - http://localhost:5000/metrics](http://localhost:5000/metrics)
- - [Prometheus server - http://localhost:9090](http://localhost:9090)
- - [Grafana server http://localhost:9091](http://localhost:9091)
+ - [Ejemplo llamada a RestApi - http://localhost:5000/api/users/list](http://localhost:5000/api/users/list)
+ - [Metricas RestApi - http://localhost:5000/metrics](http://localhost:5000/metrics)
+ - [Servidor Prometheus - http://localhost:9090](http://localhost:9090)
+ - [Servidor Grafana http://localhost:9091](http://localhost:9091)
  
-If you want to run it without docker. Compile and run the restapi:
+Si quieres ejecutar el proyecto sin Docker primero complila y ejecuta la restapi:
+
 ```shell
 cd restapi
 npm install
 npm start
 ```
-
-Now the webapp:
-
+a continuación la webapp:
 ```shell
 cd webapp
 npm install
 npm start
 ```
 
-You should be able to access the application in [http://localhost:3000](http://localhost:3000).
+Deberias ser capaz de acceder a la aplicación en [http://localhost:3000](http://localhost:3000).
 
-## More information
-You can get more information about the respository in the other README files:
-- Documentation: https://github.com/pglez82/asw2122_0/tree/master/docs
+## Mas información
+Encontrarás más información sobre el repositorio en los otros archivos README:
+- Documentación: https://github.com/pglez82/asw2122_0/tree/master/docs
 - Webapp: https://github.com/pglez82/asw2122_0/tree/master/webapp
 - Restapi: https://github.com/pglez82/asw2122_0/tree/master/restapi
