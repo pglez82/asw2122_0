@@ -1,35 +1,35 @@
-## The documentation
-In this project the documentation is compiled locally and deployed to GitHub pages.
-The deployment url is: [https://pglez82.github.io/asw2122_0/](https://pglez82.github.io/asw2122_0/).
+## Documentación
+La documentación de este proyecto se compila localmente y se despliega en GitHub pages.
+la url en la que se despliega es: [https://pglez82.github.io/asw2122_0/](https://pglez82.github.io/asw2122_0/).
 
-### Documentation build
-For the documentation we are going to use [AsciiDoc](https://asciidoc.org/) and [PlantUML](https://plantuml.com) and follows the [Arc42](https://github.com/arc42/arc42-template) template. If you want to be able to generate the doc locally you need to install Ruby, Java and some dependencies to translate the asciidoc code into html. If you are in Linux you can install Ruby and Java simply by executing:
+### Build Documentación
+Para la documentación vamos a utilizar [AsciiDoc](https://asciidoc.org/) y [PlantUML](https://plantuml.com). Seguiremos la plantilla [Arc42](https://github.com/arc42/arc42-template). Si quieres generar la documentación localmente, necesitas instalar Ruby, Java y algunas dependencias para traducir el asciidoc en código html. Si estás en una máquina Linux puedes instalar Java y Ruby simplemente ejecutando:
 
 ```shell
 apt-get install ruby openjdk-8-jre
 ```
 
-On Windows you can use [these instructions](https://www.ruby-lang.org/en/documentation/installation). Probably you will have Java already installed in your system, if not, you can download it [here](https://www.oracle.com/es/java/technologies/javase/javase8-archive-downloads.html)
+En Windows puedes seguir [estas instrucciones](https://www.ruby-lang.org/en/documentation/installation) para instalar Ruby. Probablemente tengas un JRE de Java instalado, sino puedes descargarlo [aquí](https://www.oracle.com/es/java/technologies/javase/javase8-archive-downloads.html): 
 
-Once Ruby is working you can install some gems with `asciidoctor` and `asciidoctor-diagram`.
+Una vez que Ruby está instalado y funcionando podemos instalar `asciidoctor` y `asciidoctor-diagram`.
 
 ```shell
 gem install asciidoctor asciidoctor-diagram
 ```
 
-Now it is turn to install some dependencies in the `package.json` file inside the `docs` directory:
+Ahora solo nos queda instalar las dependencias del `package.json` dentro del directorio `docs`:
 
 ```shell
 cd docs
 npm install
 ```
-After installing these tools we can generate the documentation.
+Después de instalar todas estas herramientas ya deberíamos de ser capaces de generar la documentación:
 ```shell
 npm run build
 ```
-The documentation will be generated under the `docs/build` directory. 
+La documentación se generará en el directorio `docs/build`. 
 
-### Documentation deployment
-If we want to deploy it to GitHub pages, so it is accesible via [https://pglez82.github.io/asw2122_0/](https://pglez82.github.io/asw2122_0/) we need to execute `npm run deploy`.
+### Despliegue Documentación
+Si queremos desplegar la documentación en GitHub pages, estará accesible en [https://pglez82.github.io/asw2122_0/](https://pglez82.github.io/asw2122_0/) necesitamos ejecutar `npm run deploy`.
 
-If you check the `package.json` in this directory you can see how deploying is as easy as executing `gh-pages -d build`, which can be directly executed using `npm run deploy` in the docs directory. The `gh-pages` package is in charge of pushing the documentation generated directory (basically some htmls) to a special github branch called gh-pages. Everything pushed to this branch is accessible in the repository page. Note that we only want to push there the documentation. Also is important that the documentation build is not pushed to the other branches of the project.
+Si revisas el `package.json` de este directorio veras como desplegar es tan facil como ejecutar `gh-pages -d build`, que puede hacerse ejecutando directamente `npm run deploy` en el directorio de la doumentación. el paquete `gh-pages` se encarga de subir la documentación generada (basicamente archivo html) a una rama especial de github llamda gh-pages. Todo lo que se suba a esa rama es acesible en la página del repositorio. Ten en cuenta que solo queremos subir ahí la documentación. También es importante que el build de la documentación no se suba a otras ramas del proyecto.
