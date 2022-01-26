@@ -3,9 +3,7 @@ La documentación de este proyecto se compila localmente y se despliega en GitHu
 la url en la que se despliega es: [https://pglez82.github.io/asw2122_0/](https://pglez82.github.io/asw2122_0/).
 
 ### Build Documentación
-For the documentation we are going to use [AsciiDoc](https://asciidoc.org/) and [PlantUML](https://plantuml.com) and follows the [Arc42](https://github.com/arc42/arc42-template) template. If you want to be able to generate the doc locally you need to install Ruby and some dependencies to translate the asciidoc code into html:
-
-Para la documentación vamos a utilizar [AsciiDoc](https://asciidoc.org/) y [PlantUML](https://plantuml.com). Seguiremos la plantilla [Arc42](https://github.com/arc42/arc42-template). Si quieres general la documentación en tu ordenador, necesitas instalar Ruby, Java y algunas dependencias para traducir el asciidoc en código html. Si estás en una máquina Linux puedes instalar Java y Ruby simplemente ejecutando:
+Para la documentación vamos a utilizar [AsciiDoc](https://asciidoc.org/) y [PlantUML](https://plantuml.com). Seguiremos la plantilla [Arc42](https://github.com/arc42/arc42-template). Si quieres generar la documentación localmente, necesitas instalar Ruby, Java y algunas dependencias para traducir el asciidoc en código html. Si estás en una máquina Linux puedes instalar Java y Ruby simplemente ejecutando:
 
 ```shell
 apt-get install ruby openjdk-8-jre
