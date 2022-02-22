@@ -14,7 +14,7 @@ jobs:
         key: ${{ secrets.DEPLOY_KEY }}
         command: |
           wget https://raw.githubusercontent.com/pglez82/asw2122_0/master/docker-compose-deploy.yml -O docker-compose.yml
-          export REACT_APP_API_URI= ${{ secrets.DEPLOY_HOST }}:5000/api
+          export REACT_APP_API_URI=${{ secrets.DEPLOY_HOST }}:5000/api
           docker-compose stop
           docker-compose rm -f
           docker-compose pull   
