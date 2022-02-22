@@ -52,7 +52,7 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@3.04
       env:
-        API_URI: ${{ secrets.DEPLOY_HOST }}:5000/api
+        API_URI: http://${{ secrets.DEPLOY_HOST }}:5000/api
       with:
           name: pglez82/asw2122_0/webapp
           username: ${{ github.actor }}
@@ -74,3 +74,19 @@ jobs:
           password: ${{ secrets.DOCKER_PUSH_TOKEN }}
           registry: ghcr.io
           workdir: restapi
+  deploy:
+    name: Deploy over SSH
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy over SSH
+      uses: fifsky/ssh-action@master
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        user: ${{ secrets.DEPLOY_USER }}
+        key: ${{ secrets.DEPLOY_KEY }}
+        command: |
+          wget https://raw.githubusercontent.com/pglez82/asw2122_0/master/docker-compose-deploy.yml -O docker-compose.yml
+          docker-compose stop
+          docker-compose rm -f
+          docker-compose pull   
+          docker-compose up -d
