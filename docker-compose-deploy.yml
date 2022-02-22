@@ -10,5 +10,3 @@ services:
       - "3000:3000"
     depends_on: 
       - restapi
-    environment:
-      - API_URI=$API_URI
