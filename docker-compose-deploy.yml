@@ -11,4 +11,4 @@ services:
     depends_on: 
       - restapi
     environment:
-      - REACT_APP_API_URI=$REACT_APP_API_URI
+      - API_URI=$API_URI
