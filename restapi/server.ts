@@ -7,14 +7,10 @@ import api from "./api";
 const app: Application = express();
 const port: number = 5000;
 
-const options: cors.CorsOptions = {
-  origin: ['http://localhost:3000']
-};
-
 const metricsMiddleware:RequestHandler = promBundle({includeMethod: true});
 app.use(metricsMiddleware);
 
-app.use(cors(options));
+app.use(cors());
 app.use(bp.json());
 
 app.use("/api", api)
