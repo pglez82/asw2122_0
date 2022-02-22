@@ -14,4 +14,4 @@ jobs:
         key: ${{ secrets.DEPLOY_KEY }}
         script: |
           docker login https://docker.pkg.github.com -u ${{ github.actor }} -p ${{ secrets.GIT_TOKEN }}
-          wget https://raw.githubusercontent.com/pglez82/asw2122_0/master/docker-compose.yml
+          wget https://raw.githubusercontent.com/pglez82/asw2122_0/master/docker-compose-deploy.yml -o docker-compose.yml
