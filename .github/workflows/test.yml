@@ -10,7 +10,7 @@ jobs:
       uses: fifsky/ssh-action@master
       with:
         host: ${{ secrets.DEPLOY_HOST }}
-        username: ${{ secrets.DEPLOY_USER }}
+        user: ${{ secrets.DEPLOY_USER }}
         key: ${{ secrets.DEPLOY_KEY }}
         command: |
           wget https://raw.githubusercontent.com/pglez82/asw2122_0/master/docker-compose-deploy.yml -O docker-compose.yml
