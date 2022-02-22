@@ -6,10 +6,12 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-    - name: executing remote ssh commands using password
+    - name: Deploy over SSH
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.DEPLOY_HOST }}
         username: ${{ secrets.DEPLOY_USER }}
         key: ${{ secrets.DEPLOY_KEY }}
-        script: whoami
+        script: |
+          docker login https://docker.pkg.github.com -u ${{ github.actor }} -p ${{ secrets.GIT_TOKEN }}
+          wget https://raw.githubusercontent.com/pglez82/asw2122_0/master/docker-compose.yml
