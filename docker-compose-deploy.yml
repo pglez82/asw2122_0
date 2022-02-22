@@ -10,3 +10,5 @@ services:
       - "3000:3000"
     depends_on: 
       - restapi
+    environment:
+      - REACT_APP_API_URI=$REACT_APP_API_URI
