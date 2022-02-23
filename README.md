@@ -169,3 +169,9 @@ app.use(cors());
 Everything is ready now to make the deploy. For that we need to create a new release. That will fire up the deployment process that we have just configured:
 ![image](https://user-images.githubusercontent.com/10683040/155293978-8e77e821-ed21-4f28-abd9-282ae9e5661b.png)
 
+After the actions process is finished, we can access the application using the IP of our virtual machine in the port 3000. Note that is very simple to modify the application to work in the port 80 instead. We only need to open that port and configure react to use this port instead.
+
+![image](https://user-images.githubusercontent.com/10683040/155297402-41c09d54-8160-4832-be04-21951d18bc28.png)
+
+
+
