@@ -98,21 +98,67 @@ sudo chmod +x /usr/local/bin/docker-compose
 ### GitHub Actions
 Now we have a capable machine of executing Docker containers. Lets configure our project to be able to use it to deploy our application. The first thing will be creating some GitHub secrets to have the information we need. We are going to create three, DEPLOY_HOST, with the IP of the virtual machine; DEPLOY_USER with the user with permissions to access the machine (azureuser), and DEPLOY_KEY with the contents of the file with the private key, so we are able to log in to the machine.
 
+![image](https://user-images.githubusercontent.com/10683040/155285731-4ecd6d29-b2f6-46ee-959b-689ea9f69fc7.png)
 
+Now we are going to create a new docker-compose file called docker-compose-deploy.yaml that will contain the specific docker-compose instructions to deploy the application:
 
+```yaml
+version: '3.5'
+services:
+  restapi:
+    image: ghcr.io/pglez82/asw2122_0/restapi:latest
+    ports:
+      - "5000:5000"
+  webapp:
+    image: ghcr.io/pglez82/asw2122_0/webapp:latest
+    ports:
+      - "3000:3000"
+    depends_on: 
+      - restapi
+```
+Note that in this file we are using the images that we uploaded to the github registry instead of building them from scratch.
 
+Now we can configure our actions file to include a new job `deploy` that will be in charge of deploying this docker-compose file to the virtual machine.
 
+```yaml
+deploy:
+    name: Deploy over SSH
+    runs-on: ubuntu-latest
+    needs: [docker-push-restapi,docker-push-webapp]
+    steps:
+    - name: Deploy over SSH
+      uses: fifsky/ssh-action@master
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        user: ${{ secrets.DEPLOY_USER }}
+        key: ${{ secrets.DEPLOY_KEY }}
+        command: |
+          wget https://raw.githubusercontent.com/pglez82/asw2122_0/master/docker-compose-deploy.yml -O docker-compose.yml
+          docker-compose stop
+          docker-compose rm -f
+          docker-compose pull   
+          docker-compose up -d
+```
 
+Not that this job is executed after pushing the images to the registry. We are just logging in to the machine over SSH and stoping any running containers, pulling the new images and launching everything up.
 
-Steps:
-1. Create a virtual machine (Azure, AWS, etc.)
-2. Download private key
-3. Get IP of the machine
-4. Open the ports (3000 and 5000)
-5. Create a secret DEPLOY_HOST with the ip of the machine
-6. Create a secret DEPLOY_KEY with the content of the private key to access the machine
-7. Create a docker-compose-deploy.yml to use with the actions. This docker-compose file will be for deploying to the cloud, the other will be for executing the app locally.
-8. Create the new job in the actions file. We are going to deploy using ssh commands with the help of docker compose
-9. Modify the Dockerfile of the webapp to accept an argument with the API URL (it won't be localhost when we deploy)
-10. Modify the actions to pass this argument when we are in the CI process
-11. Update cors in the restapi to accept petitions from every source
+In order for everything to work, we need to make some extra modifications. There are related with the restapi URL and how React works. In the webapp code we have in the `src/api/api.ts` file the following line:
+
+```typescript
+const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+```
+This means that React will look for an environment variable and if it exists, it will take the `apiEndPoint` from there, chosing localhost in anyother case. Environment variables in React are picked up in building time and not in execution time. That means we need to pass this variable when we are building the docker image before deploying. For that we need to change the Dockerfile for the webapp and add the following lines before `npm run build`:
+```yaml
+ARG API_URI="http://localhost:5000/api"
+ENV REACT_APP_API_URI=$API_URI
+```
+Now this Dockerfile has an argument (with a default value) that will be create the `REACT_APP_API_URI` environment variable before building the production release of the webapp. We need to pass this argument in the GitHub Actions file, when building the webapp image, that is in the job `docker-push-webapp`. 
+
+```yaml
+env:
+   API_URI: http://${{ secrets.DEPLOY_HOST }}:5000/api
+```
+Lastly we need to configure CORS accept petitions from all the sources in the restapi. This means changing the cors initialization in `restapi/server.ts` to:
+```typescript
+app.use(cors());
+```
