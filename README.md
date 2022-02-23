@@ -118,7 +118,7 @@ services:
 ```
 Note that in this file we are using the images that we uploaded to the github registry instead of building them from scratch.
 
-Now we can configure our actions file to include a new job `deploy` that will be in charge of deploying this docker-compose file to the virtual machine.
+Now we can configure our actions file to include a new job `deploy` that will be in charge of deploying this docker-compose file to the virtual machine. It will be executed after pushing the docker images to the registry.
 
 ```yaml
 deploy:
@@ -142,7 +142,9 @@ deploy:
 
 Not that this job is executed after pushing the images to the registry. We are just logging in to the machine over SSH and stoping any running containers, pulling the new images and launching everything up.
 
-In order for everything to work, we need to make some extra modifications. There are related with the restapi URL and how React works. In the webapp code we have in the `src/api/api.ts` file the following line:
+### Extra modifications needed
+
+In order for everything to work, we need to make some extra modifications in the project. There are related with the restapi URL and how React works. In the webapp code we have in the `src/api/api.ts` file the following line:
 
 ```typescript
 const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
@@ -162,3 +164,8 @@ Lastly we need to configure CORS accept petitions from all the sources in the re
 ```typescript
 app.use(cors());
 ```
+### Creating a new release
+
+Everything is ready now to make the deploy. For that we need to create a new release. That will fire up the deployment process that we have just configured:
+![image](https://user-images.githubusercontent.com/10683040/155293978-8e77e821-ed21-4f28-abd9-282ae9e5661b.png)
+
