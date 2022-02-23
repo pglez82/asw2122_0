@@ -57,6 +57,23 @@ For the deployment we have serveral options. The first an more flexible is to de
 
 ### Create the virtual machine
 For this example I am going to create a virtual machine in Azure. Other services like Amazon AWS or Google Cloud, work in the same way.
+After logging in into Microsoft Azure with a student account, we can access the services provided. The first one in the creation of Virtual Machines.
+
+![image](https://user-images.githubusercontent.com/10683040/155282509-411030c5-2b9b-4161-bbe8-28cd9626df1e.png)
+
+After clicking in Virtual Machines we will be able to create a new virtual machine. The basic machine (2Gb of RAM), would be enough for this example. Make sure that a pair a keys are generated to be able to access the machine.
+
+![image](https://user-images.githubusercontent.com/10683040/155282817-262a58dd-f203-45bf-aa73-421725aa8b03.png)
+
+Download the private key. We will need it to be able to remotely deploy the application over SSH.
+
+![image](https://user-images.githubusercontent.com/10683040/155282896-5069093e-fa61-4cdb-9cdf-777f9d978f40.png)
+
+After creating the machine, we can access its network information. Here we will have useful information as the public IP, that we will use to access the machine. Also, this is where we are going to configure the ports that will be accessible (in our case, ports 3000 and 5000).
+
+![image](https://user-images.githubusercontent.com/10683040/155283691-7d782018-f61e-43ab-83fd-f52a0cf04725.png)
+
+
 
 Steps:
 1. Create a virtual machine (Azure, AWS, etc.)
