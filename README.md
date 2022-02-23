@@ -73,6 +73,35 @@ After creating the machine, we can access its network information. Here we will 
 
 ![image](https://user-images.githubusercontent.com/10683040/155283691-7d782018-f61e-43ab-83fd-f52a0cf04725.png)
 
+To add more open ports, press in "Add inbound security route". Then, fill the information to open ports 3000 and 5000.
+
+![image](https://user-images.githubusercontent.com/10683040/155284067-e8a85c53-3171-4e40-b773-3d33e05b1159.png)
+
+Now is time for accessing the machine using SSH and installing docker in it. For this, use the public IP of your machine, with the user `azureuser` and the private key that you downloaded previously. If you are not sure how to connect, check the help in the connect tab in Azure. For instance, in my case I use this command for connecting:
+
+```ssh
+ssh -i ~/Descargas/DeploymentASW2122_key_0223.pem azureuser@52.147.199.48
+```
+Now that we are in the terminal, lets execute some commands to install Docker and docker-compose:
+
+```ssh
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+sudo apt update
+sudo apt install docker-ce
+sudo usermod -aG docker ${USER}
+sudo curl -L "https://github.com/docker/compose/releases/download/1.28.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+```
+### GitHub Actions
+Now we have a capable machine of executing Docker containers. Lets configure our project to be able to use it to deploy our application. The first thing will be creating some GitHub secrets to have the information we need. We are going to create three, DEPLOY_HOST, with the IP of the virtual machine; DEPLOY_USER with the user with permissions to access the machine (azureuser), and DEPLOY_KEY with the contents of the file with the private key, so we are able to log in to the machine.
+
+
+
+
+
 
 
 Steps:
