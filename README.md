@@ -49,3 +49,24 @@ You can get more information about the respository in the other README files:
 - Documentation: https://github.com/pglez82/asw2122_0/tree/master/docs
 - Webapp: https://github.com/pglez82/asw2122_0/tree/master/webapp
 - Restapi: https://github.com/pglez82/asw2122_0/tree/master/restapi
+
+
+## Deployment
+
+For the deployment we have serveral options. The first an more flexible is to deploy to a virtual machine using SSH. This will work with any cloud service (or with our own server). Other options include using the container services that all the cloud services provide. This means, deploying our Docker containers directly. Here I am going to use the first approach. I am going to create a virtual machine in a cloud service and after installing docker and docker-compose, deploy our containers there using GitHub Actions and SSH.
+
+### Create the virtual machine
+For this example I am going to create a virtual machine in Azure. Other services like Amazon AWS or Google Cloud, work in the same way.
+
+Steps:
+1. Create a virtual machine (Azure, AWS, etc.)
+2. Download private key
+3. Get IP of the machine
+4. Open the ports (3000 and 5000)
+5. Create a secret DEPLOY_HOST with the ip of the machine
+6. Create a secret DEPLOY_KEY with the content of the private key to access the machine
+7. Create a docker-compose-deploy.yml to use with the actions. This docker-compose file will be for deploying to the cloud, the other will be for executing the app locally.
+8. Create the new job in the actions file. We are going to deploy using ssh commands with the help of docker compose
+9. Modify the Dockerfile of the webapp to accept an argument with the API URL (it won't be localhost when we deploy)
+10. Modify the actions to pass this argument when we are in the CI process
+11. Update cors in the restapi to accept petitions from every source
