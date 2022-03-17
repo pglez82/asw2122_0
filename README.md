@@ -148,14 +148,31 @@ Amazon Academy is a platform created by Amazon to prepare students to work with 
    <img width="500" alt="Default options" src="https://user-images.githubusercontent.com/10683040/158770582-2e33b804-a53b-4de8-bc60-7b8f6254abaf.png">
 </p>
 
+- Step 7: Summary. At the summary step, before launch our instance, a dialog ask us to create a new Key pair or use existing one. We'll create a new one with the default value. That will downlaod the **home.pem** file. We always can create new key pairs at the *AWS Console Menu - In the Security and Network - KeyPair* 
 
+<p align="center">   
+   <img width="300" alt="PEM key" src="https://user-images.githubusercontent.com/10683040/158771034-6ea46352-42d7-4506-a700-f2900d684d51.png">
+</p>
 
+- If you will use an SSH client on a macOS or Linux computer to connect to your Linux instance, use the following command to set the permissions of your private key file so that only you can read it.
 
+```
+ chmod 400 awsdeployment.pem
+```
+- Once the instace has been created, we need to know its public ip and/or public dns name. All this information is in the instance detail panel.
 
+<p align="center">   
+   <img width="500" alt="Detail instance" src="https://user-images.githubusercontent.com/10683040/158771619-7d893b8a-b09c-4d26-bb0e-96b3c86ede87.png">
+</p>
 
+- We'll connect at our EC2 instance with ssh using our key file: 
+
+```bash
+ssh -i awsdeployment.pem ubuntu@ec2-44-202-121-52.compute-1.amazonaws.com
+```
 
 ### Installing Docker and Docker compose in the virtual machine
-Now that we are in the terminal, lets execute some commands to install Docker and docker-compose:
+Now that we are in the terminal (it does not matter if using AWS or Azure or any other service), lets execute some commands to install Docker and docker-compose:
 
 ```ssh
 sudo apt update
