@@ -55,7 +55,7 @@ You can get more information about the respository in the other README files:
 
 For the deployment we have serveral options. The first an more flexible is to deploy to a virtual machine using SSH. This will work with any cloud service (or with our own server). Other options include using the container services that all the cloud services provide. This means, deploying our Docker containers directly. Here I am going to use the first approach. I am going to create a virtual machine in a cloud service and after installing docker and docker-compose, deploy our containers there using GitHub Actions and SSH.
 
-### Create the virtual machine
+### Create the virtual machine [Option 1 - Microsoft Azure]
 For this example I am going to create a virtual machine in Azure. Other services like Amazon AWS or Google Cloud, work in the same way.
 After logging in into Microsoft Azure with a student account, we can access the services provided. The first one in the creation of Virtual Machines.
 
@@ -82,6 +82,27 @@ Now is time for accessing the machine using SSH and installing docker in it. For
 ```ssh
 ssh -i ~/Descargas/DeploymentASW2122_key_0223.pem azureuser@52.147.199.48
 ```
+### Create the virtual machine [Option 2 - Amazon AWS]
+
+Amazon Academy is a platform created by Amazon to prepare students to work with Amazon AWS. In order to create a new virtual machine in AWS we need to access the service EC2.
+
+- Log In at LMS AWS Academy with your student user/passwd
+- At the DashBoard, click on the Lab Course AWS Academy Learner Lab - Foundation Services [15286]
+- Now you are inside the AWS Course. The Module Menu Item show you available course materials : guides, presentations...Click on Learner Lab - Foundational Services to go to you lab. Lab image:
+
+
+![image](https://user-images.githubusercontent.com/10683040/158764913-80d6805c-f1ef-434c-a0f8-f2d4e2c09825.png)
+
+- Start the lab by selecting Start Lab
+- When the dot next to AWS turns green, your lab environment is ready to use. Click AWS to launch the AWS Console in a new tab. A new tab will open the AWS Management Console when you click on AWS. The system logged you into a temporary AWS account and the lab session will automatically end when the session timer expires. The system will save your work when you end the session or the session timer expires.
+- Go to AWS Console Tab and select services EC2
+
+![image](https://user-images.githubusercontent.com/10683040/158765167-0aa50330-8cad-4450-8060-8b972cdb46e4.png)
+
+-  
+
+
+### Installing Docker and Docker compose in the virtual machine
 Now that we are in the terminal, lets execute some commands to install Docker and docker-compose:
 
 ```ssh
