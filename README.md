@@ -59,23 +59,33 @@ For the deployment we have serveral options. The first an more flexible is to de
 For this example I am going to create a virtual machine in Azure. Other services like Amazon AWS or Google Cloud, work in the same way.
 After logging in into Microsoft Azure with a student account, we can access the services provided. The first one in the creation of Virtual Machines.
 
-![image](https://user-images.githubusercontent.com/10683040/155282509-411030c5-2b9b-4161-bbe8-28cd9626df1e.png)
+<p align="center">   
+   <img width="500" alt="Azure options" src="https://user-images.githubusercontent.com/10683040/155282509-411030c5-2b9b-4161-bbe8-28cd9626df1e.png">
+</p>
 
 After clicking in Virtual Machines we will be able to create a new virtual machine. The basic machine (2Gb of RAM), would be enough for this example. Make sure that a pair a keys are generated to be able to access the machine.
 
-![image](https://user-images.githubusercontent.com/10683040/155282817-262a58dd-f203-45bf-aa73-421725aa8b03.png)
+<p align="center">   
+   <img width="500" alt="Creating the VM" src="https://user-images.githubusercontent.com/10683040/155282817-262a58dd-f203-45bf-aa73-421725aa8b03.png">
+</p>
 
 Download the private key. We will need it to be able to remotely deploy the application over SSH.
 
-![image](https://user-images.githubusercontent.com/10683040/155282896-5069093e-fa61-4cdb-9cdf-777f9d978f40.png)
+<p align="center">   
+   <img width="200" alt="Download private key" src="https://user-images.githubusercontent.com/10683040/155282896-5069093e-fa61-4cdb-9cdf-777f9d978f40.png">
+</p>
 
 After creating the machine, we can access its network information. Here we will have useful information as the public IP, that we will use to access the machine. Also, this is where we are going to configure the ports that will be accessible (in our case, ports 3000 and 5000).
 
-![image](https://user-images.githubusercontent.com/10683040/155283691-7d782018-f61e-43ab-83fd-f52a0cf04725.png)
+<p align="center">   
+   <img width="500" alt="Network configuration" src="https://user-images.githubusercontent.com/10683040/155283691-7d782018-f61e-43ab-83fd-f52a0cf04725.png">
+</p>
 
 To add more open ports, press in "Add inbound security route". Then, fill the information to open ports 3000 and 5000.
 
-![image](https://user-images.githubusercontent.com/10683040/155284067-e8a85c53-3171-4e40-b773-3d33e05b1159.png)
+<p align="center">   
+   <img width="500" alt="Download private key" src="https://user-images.githubusercontent.com/10683040/155284067-e8a85c53-3171-4e40-b773-3d33e05b1159.png">
+</p>
 
 Now is time for accessing the machine using SSH and installing docker in it. For this, use the public IP of your machine, with the user `azureuser` and the private key that you downloaded previously. If you are not sure how to connect, check the help in the connect tab in Azure. For instance, in my case I use this command for connecting:
 
