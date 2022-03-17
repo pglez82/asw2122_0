@@ -63,31 +63,31 @@ After logging in into Microsoft Azure with a student account, we can access the 
    <img width="500" alt="Azure options" src="https://user-images.githubusercontent.com/10683040/155282509-411030c5-2b9b-4161-bbe8-28cd9626df1e.png">
 </p>
 
-After clicking in Virtual Machines we will be able to create a new virtual machine. The basic machine (2Gb of RAM), would be enough for this example. Make sure that a pair a keys are generated to be able to access the machine.
+- After clicking in Virtual Machines we will be able to create a new virtual machine. The basic machine (2Gb of RAM), would be enough for this example. Make sure that a pair a keys are generated to be able to access the machine.
 
 <p align="center">   
    <img width="500" alt="Creating the VM" src="https://user-images.githubusercontent.com/10683040/155282817-262a58dd-f203-45bf-aa73-421725aa8b03.png">
 </p>
 
-Download the private key. We will need it to be able to remotely deploy the application over SSH.
+- Download the private key. We will need it to be able to remotely deploy the application over SSH.
 
 <p align="center">   
    <img width="200" alt="Download private key" src="https://user-images.githubusercontent.com/10683040/155282896-5069093e-fa61-4cdb-9cdf-777f9d978f40.png">
 </p>
 
-After creating the machine, we can access its network information. Here we will have useful information as the public IP, that we will use to access the machine. Also, this is where we are going to configure the ports that will be accessible (in our case, ports 3000 and 5000).
+- After creating the machine, we can access its network information. Here we will have useful information as the public IP, that we will use to access the machine. Also, this is where we are going to configure the ports that will be accessible (in our case, ports 3000 and 5000).
 
 <p align="center">   
    <img width="500" alt="Network configuration" src="https://user-images.githubusercontent.com/10683040/155283691-7d782018-f61e-43ab-83fd-f52a0cf04725.png">
 </p>
 
-To add more open ports, press in "Add inbound security route". Then, fill the information to open ports 3000 and 5000.
+- To add more open ports, press in "Add inbound security route". Then, fill the information to open ports 3000 and 5000.
 
 <p align="center">   
    <img width="500" alt="Download private key" src="https://user-images.githubusercontent.com/10683040/155284067-e8a85c53-3171-4e40-b773-3d33e05b1159.png">
 </p>
 
-Now is time for accessing the machine using SSH and installing docker in it. For this, use the public IP of your machine, with the user `azureuser` and the private key that you downloaded previously. If you are not sure how to connect, check the help in the connect tab in Azure. For instance, in my case I use this command for connecting:
+- Now is time for accessing the machine using SSH and installing docker in it. For this, use the public IP of your machine, with the user `azureuser` and the private key that you downloaded previously. If you are not sure how to connect, check the help in the connect tab in Azure. For instance, in my case I use this command for connecting:
 
 ```ssh
 ssh -i ~/Descargas/DeploymentASW2122_key_0223.pem azureuser@52.147.199.48
@@ -100,16 +100,58 @@ Amazon Academy is a platform created by Amazon to prepare students to work with 
 - At the DashBoard, click on the Lab Course AWS Academy Learner Lab - Foundation Services [15286]
 - Now you are inside the AWS Course. The Module Menu Item show you available course materials : guides, presentations...Click on Learner Lab - Foundational Services to go to you lab. Lab image:
 
-
-![image](https://user-images.githubusercontent.com/10683040/158764913-80d6805c-f1ef-434c-a0f8-f2d4e2c09825.png)
+<p align="center">   
+   <img width="500" alt="Fundational services" src="https://user-images.githubusercontent.com/10683040/158764913-80d6805c-f1ef-434c-a0f8-f2d4e2c09825.png">
+</p>
 
 - Start the lab by selecting Start Lab
 - When the dot next to AWS turns green, your lab environment is ready to use. Click AWS to launch the AWS Console in a new tab. A new tab will open the AWS Management Console when you click on AWS. The system logged you into a temporary AWS account and the lab session will automatically end when the session timer expires. The system will save your work when you end the session or the session timer expires.
 - Go to AWS Console Tab and select services EC2
 
-![image](https://user-images.githubusercontent.com/10683040/158765167-0aa50330-8cad-4450-8060-8b972cdb46e4.png)
+<p align="center">   
+   <img width="500" alt="EC2 access" src="https://user-images.githubusercontent.com/10683040/158765167-0aa50330-8cad-4450-8060-8b972cdb46e4.png">
+</p>
 
--  
+- In the EC2 Service, at the Instances Menu option, we can monitoring our created instances. Click the **Launch Instance** button to create a new instance 
+
+<p align="center">   
+   <img width="500" alt="Launch instance" src="https://user-images.githubusercontent.com/10683040/158769122-3b082ea9-d796-41ad-a8cb-1c46e309f4af.png">
+</p>
+
+- Follow wizard steps: - Step 1: Choose an Ubuntu 20.04 LTS image. 
+
+<p align="center">   
+   <img width="500" alt="Launch instance" src="https://user-images.githubusercontent.com/10683040/158769294-092c02e3-6a24-449d-8697-affd287a28ea.png">
+</p>
+
+- Step 2:Choose Instance Type. We choose medium option. 
+
+<p align="center">   
+   <img width="500" alt="Launch instance" src="https://user-images.githubusercontent.com/10683040/158769556-bfaa7733-04d4-45dc-8bfe-ddaf13154958.png">
+</p>
+
+- Step 3:Configure Instance Details- We don't change default values. 
+
+<p align="center">   
+   <img width="500" alt="Default options" src="https://user-images.githubusercontent.com/10683040/158769782-41e43d9b-c8d9-456a-b345-e753ac832abb.png">
+</p>
+
+- Step 4: Storage Capacity. We increase storage capacity to 64 Gb 
+
+<p align="center">   
+   <img width="500" alt="Default options" src="https://user-images.githubusercontent.com/10683040/158769977-6ef85390-6fe5-48ab-aa31-d9a653916741.png">
+</p>
+
+- Step 5: We dont add any tag. - Step 6: Configure Security Group. We open ssh , 3000 and 5000 ports for all inbound traffic and every IP. 
+
+<p align="center">   
+   <img width="500" alt="Default options" src="https://user-images.githubusercontent.com/10683040/158770582-2e33b804-a53b-4de8-bc60-7b8f6254abaf.png">
+</p>
+
+
+
+
+
 
 
 ### Installing Docker and Docker compose in the virtual machine
