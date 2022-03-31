@@ -11,7 +11,7 @@ defineFeature(feature, test => {
   beforeAll(async () => {
     browser = process.env.GITHUB_ACTIONS
       ? await puppeteer.launch()
-      : await puppeteer.launch({ headless: true });
+      : await puppeteer.launch({ headless: false, slowMo: 50 });
     page = await browser.newPage();
 
     await page
@@ -32,7 +32,6 @@ defineFeature(feature, test => {
     });
 
     when('I fill the data in the form and press submit', async () => {
-      await expect(page).toMatch('Hi, ASW students')
       await expect(page).toFillForm('form[name="register"]', {
         username: username,
         email: email,
